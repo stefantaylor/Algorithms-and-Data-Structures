@@ -1,0 +1,679 @@
+#LyX 1.6.10 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+
+\size larger
+Informatics 2b Coursework 1 Report
+\end_layout
+
+\begin_layout Author
+
+\size larger
+Stefan Taylor
+\end_layout
+
+\begin_layout Author
+
+\size larger
+s1006260
+\end_layout
+
+\begin_layout Date
+
+\size larger
+21/03/2012
+\end_layout
+
+\begin_layout Part
+Explantion of Code
+\end_layout
+
+\begin_layout Section
+Functions
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+Functions are herein listed and described in roughly chronological order.
+ Some functions are ommitted, as they were only used for testing and/or
+ the plotting of graphs.
+\end_layout
+
+\begin_layout Subsection
+
+\size larger
+distanceMatrix
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+distanceMatrix is a function which take no arguments, and returns a matrix
+ of all the Euclidean Distances between every point in the file data_90.mat.
+ It requires the data_90 file to be present in the same file directory.
+\end_layout
+
+\begin_layout Subsection
+
+\size larger
+findmeans
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+findmeans is a function which takes a single argument, (designed to be a
+ distance matrix), and returns the two points furthest from each other.
+ It requires the data_90 file to be present in the same file directory.
+\end_layout
+
+\begin_layout Subsection
+
+\size larger
+kMeans
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+kMeans is a funtion which takes 2 arguments, (designed to be an integer
+ and a matrix containing a list of means), and returns additional means
+ based on the value of the integer.
+ For example, if the integer were 5, kMeans would return the initial list
+ of means it was given, plus additional means calculated by kMeans, until
+ 5 means were returned.
+ Each additional mean returned is determined by finiding the point with
+ the greatest product of distances from the current list of means.
+ The means returned are contained within a matrix.
+ It requires the data_90 file to be present in the same file directory.
+\end_layout
+
+\begin_layout Subsection
+
+\size larger
+kmeanscluster
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+kmeanscluster is a function which takes 2 arguments, (designed to be an
+ integer and a matrix containing a list of means).
+ It returns 2 items; a matrix containing the set of points and the cluster
+ value of each point; and matrix containing recalculated means.
+ The integer is the number of clusters to cluster the data into.
+ The function clusters the data in data_90.mat based on the means given,
+ and then recalculates the means based on the new clusters.
+ This process loops until every time newmeans are calculated, they are no
+ different from the previous set of means.
+ For example,
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+[a,b] = kmeanscluster(3, kmeans(3, findmeans(distanceMatrix)))
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size larger
+Returns:
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+a =
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+-46.8961 -75.9698 -11.2257 2.0000
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+3.8562 -2.9817 7.7743 3.0000
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+36.2124 206.7241 -13.9085 1.0000
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+24.5805 -57.3156 7.6623 2.0000
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+-59.7804 -84.4784 -11.1064 2.0000
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+-28.0477 35.7853 9.9302 3.0000
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+35.8269 224.5214 -25.8797 1.0000
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+-48.7897 -87.8380 -5.9678 2.0000
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+24.0046 14.2970 12.7559 3.0000
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+...
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+b =
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+22.3244 203.5259 -13.2099
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+-14.8388 -81.5841 -9.3343
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+0.9240 9.5330 10.9567
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size larger
+The clusters for 2,3,4 & 5 means can all be determined by running the command
+ [a,b] = kmeanscluster(i, kmeans(i, findmeans(distanceMatrix))) from the
+ matlab terminal, replacing i with the number of means.
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size larger
+kmeanscluster requires the data_90 file to be present in the same file directory.
+\end_layout
+
+\begin_layout Subsection
+
+\size larger
+sumsquarederrors
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+sumsquarederrors is function which takes no arguments and returns a vector
+ of error values.
+ Rather than pass in variables, I hard coded them into the function instead,
+ (bad practice, but it would make function calls easier).
+ It obtains the outputs of kmeanscluster for 2,3,4 and 5 means, (using the
+ same amount of clusters), and uses these to return the error vector.
+ A plot of the error vector (the sum-squared error plot) is shown below:
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+\begin_inset Graphics
+	filename SumSquaredError.jpg
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size larger
+sumsquarederrors requires the distanceMatrix, findmeans, kMeans and kmeanscluste
+r files to be present in the same file directory.
+ 
+\end_layout
+
+\begin_layout Subsection
+
+\size larger
+covar
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+covar is a function which takes 1 argument, (designed to be an integer giving
+ the number of means) and returns the covariance matrices for each cluster
+ in a single matrix (immediately below each other).
+ For example, covar(3) returns:
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+ans =
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+1.0e+03 *
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+0.7758 -0.2949 -0.0017 
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+-0.2949 1.0332 -0.3522
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+-0.0017 -0.3522 0.1518 
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+0.7508 -0.1381 0.0361
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+-0.1381 0.2969 -0.0181
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+0.0361 -0.0181 0.0175 
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+0.6612 -0.3331 0.0648
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size larger
+The 9 by 3 matrix represents 3 3 by 3 matrices stacked on top of one another.
+ 
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size larger
+The covariance matrices were calculated using the formula
+\begin_inset Formula \[
+{\displaystyle {\displaystyle \tfrac{1}{N}}\sum((x-\mu)}\times(x-\mu)')\]
+
+\end_inset
+
+ where 
+\begin_inset Formula $N$
+\end_inset
+
+ was the total number of points, 
+\begin_inset Formula $x$
+\end_inset
+
+ a point and 
+\begin_inset Formula $\mu$
+\end_inset
+
+the mean.
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size larger
+It requires the distanceMatrix, findmeans, kMeans and kmeanscluster files
+ to be present in the same file directory.
+\end_layout
+
+\begin_layout Subsection
+
+\size larger
+classify900
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+classify900 is a function which takes no arguments and returns a 900 by
+ 1 matrix containing the value of the cluster that the point with the same
+ index in data_900.mat should be assigned to according to the Gaussians.
+ It determines this by calculating the probability density function for
+ each cluster, using the formula: 
+\begin_inset Formula \[
+\frac{1}{2\pi^{\frac{d}{2}}|\Sigma|^{\frac{1}{2}}}exp(-0.5(x-\mu)'\Sigma^{-1}(x-\mu))\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size larger
+There were then 3 values for the pdf.
+ Taking the max of these values yielded which cluster the point should be
+ assigned to.
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size larger
+A graph of the 900 points with these cluster values is shown below:
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+\begin_inset Graphics
+	filename gclusterplot.jpg
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size larger
+The function requires the data_900.mat, distanceMatrix, findmeans, kMeans
+ and kmeanscluster files to be present in the same file directory.
+\end_layout
+
+\begin_layout Subsection
+
+\size larger
+kmeanscluster900
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+Identical to the kmeanscluster function, except works with values from data_900
+ rather than data_90.
+ A graph of the 900 points clustered according to kmeans is shown below:
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+\begin_inset Graphics
+	filename kclusterplot.jpg
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size larger
+This function requires the data_90 file to be present in the same file directory.
+\end_layout
+
+\begin_layout Subsection
+\noindent
+
+\size larger
+trueclusters
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+When comparing my clusters to the 'true' clusters, I saw that my clusters
+ had been labelled differently from the ones given, namely, the 2s and 3s
+ had been allocated differently.
+ For ease of computing the confusion matrices, I wrote the function trueclusters
+, which takes the two sets of clusters given by cluster900 and kmeanscluster900,
+ and swaps the 2s and 3s.
+ The clusters themselves are preserved, just the labels are switched.
+ truecluster returns the two 'switched' clusters.
+ It requires kmeanscluster900, kMeans, findmeans and distanceMatrix to be
+ in the same file directory.
+\end_layout
+
+\begin_layout Subsection
+
+\size larger
+confusion
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+confusion is a function which takes no arguments, and returns the confusion
+ matrices for both the Gaussian Classification and K Means Clustering (In
+ both cases assuming 3 clusters).
+ The confusion matrices are given below:
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+a =
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+300 0 0
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+0 300 0
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+0 0 300
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+b =
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+300 0 0
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+0 268 0
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+0 32 300
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size larger
+where a is the confusion matrix for the Gaussian Classification and b the
+ confusion matrix for the K Means Clustering.
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size larger
+Confusion requires trueclusters and the true_900 file to be in the same
+ file directory.
+\end_layout
+
+\begin_layout Subsection
+main
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+main is a function I designed to try and give outputs to verify that I had
+ completed all the programming subtasks.
+ When executed from the Matlab terminal it produces 4 graphs, (the sum squared
+ error plot, the clustered data_90 by 3 means, the gaussian classified data_900
+ and the 3 means clustered data_900), and also outputs the covariance matrices
+ with their means, and the confusion matrices.
+\end_layout
+
+\begin_layout Part
+Comparison
+\end_layout
+
+\begin_layout Section
+Higher versus Lower number of means for K Means
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+From the sum squared error chart it is clear to see that a higher number
+ of means produces a lower error.
+ This is intuitively obvious, as the more means(cluster centres) you have,
+ the less likely you are to have large distances between those cluster centres
+ and points belonging to that cluster.
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\size larger
+It can also be seen from the graph that, whilst having more means does initially
+ reduce your error drastically, the error is influenced less and less with
+ each extra mean you add.
+ Again this is intuitively obvious, as initially adding means will greatly
+ reduce the potential distance between points and their cluster centre,
+ since said cluster centres will be very far apart.
+ However as more means are created they will draw closer and closer together,
+ not reducing the distance between points and means by nearly as much.
+\end_layout
+
+\begin_layout Section
+K Means Clustering versus Gaussian Classification
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+In this case it is clear that clustering by Gaussian Classification was
+ more effective - it can be clearly seen from the graphs and the lack of
+ errors in the confusion matrix.
+ K Means, however, did make some errors - 32/900 values were clustered incorrect
+ly, giving a 3.5556% error.
+ Still, this is quite a low percentage, and in systems where accuracy is
+ not critical, or where there are clear divisions between different clusters,
+ it is still a viable method.
+ 
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,12 @@
+Instructions to use scratch space memory:
+
+1) Copy the current version of BigInt.java to another file.
+2) Copy the file versions/BigInt.scratch to imult/BigInt.java
+3) Copy the file versions/MemoryFarm.java to imult/MemoryFarm.java
+4) Use the static method MemoryFarm.init() to initialize the 
+   needed memory in an appropriate place, i.e., a main() method or
+   at the beginning of BigIntMul.getRunTimes(). 
+5) Use the static method MemoryFarm.dealloc() to reset the 
+   scratch space in an appropriate place, i.e., in getRunTimes() 
+   after each timed execution of koMul() or koMulOpt().
+6) Recompile everything and run the code with Xmx1024m switch. You will see points of inconsistencies for the runtimes. These are the Java GC doing its thing. 

@@ -1,0 +1,185 @@
+package imult;
+
+import java.lang.Math;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.Vector;
+import java.util.InputMismatchException;
+import java.lang.NullPointerException;
+/*
+ * Class BigInt: Represents large positive integers in base = 10^4 
+ * stored from least to most significant digits. 
+ * (See coursework handout for full method documentation)
+ */
+public class BigInt {
+  private static final int power_ = 4; // base digit length
+  public static final int base_ = (int) Math.pow(10, power_);  // base
+  public static final int MAX_LENGTH_ = 2000; // max digits allowed 
+  private Unsigned[] digits_ = null; 
+  private static Random rand = new Random();
+  public static Unsigned Zero_ = new Unsigned(0);
+  private int length_ = 0;
+  // constructors
+  public BigInt() { 
+    digits_ = MemoryFarm.alloc();
+  }
+  public BigInt(int n) {
+    digits_ = new Unsigned[MAX_LENGTH_]; 
+    for(int i = 0; i < MAX_LENGTH_; i++)
+      setDigit(i, Zero_);
+    randomDigits(n);
+  }
+  public BigInt(String sval) {
+    digits_ = new Unsigned[MAX_LENGTH_]; 
+    for(int i = 0; i < MAX_LENGTH_; i++)
+      setDigit(i, Zero_);
+    inputDigits(sval);
+  }
+  public BigInt split(int r, int s) {
+    assert((0 <= r) && (r <= s) && (s <= MAX_LENGTH_));
+    BigInt part = new BigInt();
+    int index = 0;
+    for(int i = r; i <= s; i++) {
+      part.setDigit(index, digits_[i]);
+      index++;
+    }
+    return part;
+  }
+  public void setDigit(int index, Unsigned digit) {
+    assert(index < MAX_LENGTH_);
+    assert(digit.value() < base_);
+    if((digit.value() > 0) && (index >= length_)) {
+      this.length_ = index + 1;
+    }
+    digits_[index] = digit;
+  }
+  public Unsigned getDigit(int index) {
+    assert(index < MAX_LENGTH_);
+    return digits_[index];
+  }
+  public int length() {
+    return length_;
+  }
+  public int findLength() {  // slow!!
+    int len = 0, tmp = 1;
+    for(int i = 0; i < MAX_LENGTH_; i++) {
+        if(digits_[i].value() > 0) {
+          len += tmp;
+          tmp = 1;
+        }
+        else tmp++;
+    }
+    return len;
+  }
+  public void lshift(int n) {
+    /*for(int i = MAX_LENGTH_ - n; i < MAX_LENGTH_; i++) {
+      if(digits_[i].value() != 0) {
+        System.err.println("WARNING: shifting out nonzero digits in BigInt");
+        break;
+      }
+    }*/
+    int len = length_;
+    System.arraycopy(digits_, 0, digits_, n, len);
+    length_ += n;
+    for(int i = 0; i < n; i++)
+      setDigit(i, Zero_);
+  }
+  public void clear() {
+    for(int i = 0; i < length_; i++)
+      setDigit(i, Zero_);
+    length_ = 0;
+  }
+  public void randomDigits(int n) {
+    assert(n > 0 && n <= MAX_LENGTH_);
+    this.clear();
+    if(n >= MAX_LENGTH_ / 2) {
+      System.err.println("WARNING: Using a " + n + " digit BigInt may cause overflow when multiplied.");
+    }
+    for(int i = 0; i < n; i++) {
+      setDigit(i, new Unsigned(rand.nextInt(base_)));  
+    }
+    if(digits_[n - 1].value() == 0) 
+      setDigit(n - 1, new Unsigned(1)); 
+    assert(length_ == n);
+  }
+  // TODO: MAKE SURE THIS METHOD THROWS ERRORS FOR ALL WRONG INPUT
+  public void inputDigits(String sval) {
+    this.clear(); // clear all current digits
+    Vector<Unsigned> vtmp = new Vector<Unsigned>();
+    // parse string for spaces
+    Scanner scan = new Scanner(sval);
+    while(scan.hasNext()) {
+      try {
+        int n = scan.nextInt();
+        if(n >= base_) {
+          System.err.println("ERROR: Digit " + n + " too large for base " + base_);
+          System.exit(1);
+        }
+        vtmp.add(new Unsigned(n));
+      }
+      catch(InputMismatchException e) {
+        System.err.println("ERROR: Invalid symbol while parsing digits \"" + scan.next() + "\"");
+        System.exit(1);
+      }
+    }
+    scan.close();
+    // store with lowest base digits first
+    length_ = vtmp.size();
+    for(int i = 0; i < length_; i++) {
+      setDigit(i, vtmp.get(length_ - i - 1));
+    }
+    if(length_ >= MAX_LENGTH_ / 2)
+      System.err.println("WARNING: Using a " + this.length() + " digit BigInt may cause overflow when multiplied.");
+  }
+  public static int base() {
+    return base_;
+  }
+  public void print() {
+    int len = this.length();
+    if(len == 0) {
+      System.out.println("0");
+      return;
+    }
+    for(int i = len - 1; i >= 0; i--) {
+      String zfill = "";
+      for(int j = power_ - 1; j > 0; j--) {
+        if(digits_[i].value() < (long)Math.pow(10, j)) {
+          if(i < len - 1)
+            zfill += "0";
+        }
+        else break;
+      }
+      System.out.print(zfill + digits_[i].value());
+    }
+    System.out.print("\n");
+  }
+  public void dump() {
+    // prints from least to most significant 
+    // as stored. 
+    int len = this.length();
+    for(int i = 0; i < len; i++)
+      System.err.print(digits_[i].value() + " | ");
+    System.err.print("\n");
+  }
+  public long value() {
+    long value = 0;
+    int len = this.length();
+    for(int i = 0; i < len; i++) {
+      value += digits_[i].value() * (long)Math.pow(base_, i);
+    }
+    return value;
+  }
+  public static void setRandSeed(long seed) {
+    rand.setSeed(seed);
+  }
+  public static void main(String argv[]) {
+    BigInt bigi = new BigInt("5 1 3 6 0 4 1");
+    bigi.dump(); 
+    BigInt spbi = bigi.split(2, 5);
+    spbi.dump();
+    spbi.print();
+    //bigi.lshift(2);
+    //System.out.println("Length=" + bigi.length());
+  }
+
+} //end class BigInt

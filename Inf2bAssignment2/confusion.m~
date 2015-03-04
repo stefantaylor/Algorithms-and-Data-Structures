@@ -1,0 +1,55 @@
+function [gconfusion, kconfusion] = confusion()
+    load true_900.mat;
+    truedata = true_900;
+    [gcluster,kcluster] = trueclusters();
+    gconfusion = zeros(3,3);
+    kconfusion = zeros(3,3);
+    for i = 1:900
+        
+    end
+    
+%     for i = 1:900
+%         if gcluster(i) == 1 && truedata(i) == 1
+%             gconfusion(1,1) = gconfusion(1,1) + 1;
+%         elseif gcluster(i) == 1 && truedata(i) == 2
+%             gconfusion(1,2) = gconfusion(1,2) + 1;
+%         elseif gcluster(i) == 1 && truedata(i) == 3
+%             gconfusion(1,3) = gconfusion(1,3) + 1;
+%         elseif gcluster(i) == 2 && truedata(i) == 1
+%             gconfusion(2,1) = gconfusion(1,1) + 1;
+%         elseif gcluster(i) == 2 && truedata(i) == 2
+%             gconfusion(2,2) = gconfusion(1,2) + 1;
+%         elseif gcluster(i) == 2 && truedata(i) == 3
+%             gconfusion(2,3) = gconfusion(1,3) + 1;
+%         elseif gcluster(i) == 3 && truedata(i) == 1
+%             gconfusion(3,1) = gconfusion(1,1) + 1;
+%         elseif gcluster(i) == 3 && truedata(i) == 2
+%             gconfusion(3,2) = gconfusion(1,2) + 1;
+%         elseif gcluster(i) == 3 && truedata(i) == 3
+%             gconfusion(3,3) = gconfusion(1,3) + 1;
+%         end
+%             
+%             
+%         if kcluster(i) == 1 && truedata(i) == 1
+%             kconfusion(1,1) = kconfusion(1,1) + 1;
+%         elseif kcluster(i) == 1 && truedata(i) == 2
+%             kconfusion(1,2) = kconfusion(1,2) + 1;
+%         elseif kcluster(i) == 1 && truedata(i) == 3
+%             kconfusion(1,3) = kconfusion(1,3) + 1;
+%         elseif kcluster(i) == 2 && truedata(i) == 1
+%             kconfusion(2,1) = kconfusion(1,1) + 1;
+%         elseif kcluster(i) == 2 && truedata(i) == 2
+%             kconfusion(2,2) = kconfusion(1,2) + 1;
+%         elseif kcluster(i) == 2 && truedata(i) == 3
+%             kconfusion(2,3) = kconfusion(1,3) + 1;
+%         elseif kcluster(i) == 3 && truedata(i) == 1
+%             kconfusion(3,1) = kconfusion(1,1) + 1;
+%         elseif kcluster(i) == 3 && truedata(i) == 2
+%             kconfusion(3,2) = kconfusion(1,2) + 1;
+%         elseif kcluster(i) == 3 && truedata(i) == 3
+%             kconfusion(3,3) = kconfusion(1,3) + 1;
+%             
+%         end
+%     end
+    
+end
